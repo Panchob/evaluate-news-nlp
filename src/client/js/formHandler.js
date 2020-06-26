@@ -4,16 +4,17 @@ function handleSubmit(event) {
 
     // check what text was put into the form field
     let url = document.getElementById('name').value
-    console.log(url)
     
     console.log("::: Form Submitted :::")
-    generateSumary('/summary', {article:url})
+    //generateSummary('/summary', {article:url})
+    fetch('/test')
+    .then(res => res.json)
     .then(function(res) {
-        document.getElementById('results').innerHTML = res
+        document.getElementById('results').innerHTML = res.test
     });
 }
 
-const generateSumary = async(url='', data = {})=>{
+const generateSummary = async(url='', data = {})=>{
     const res = await fetch(url, {
         method: 'POST',
         credentials: 'same-origin',
