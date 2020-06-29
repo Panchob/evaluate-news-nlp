@@ -25,8 +25,7 @@ module.exports = {
             {
                 test: /\.s[ac]ss$/,
                 use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
-            }
-            ,
+            },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i, 
                 loader: "file-loader?name=/public/icons/[name].[ext]"

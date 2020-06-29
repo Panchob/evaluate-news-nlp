@@ -9,10 +9,13 @@ module.exports = {
     entry: './src/client/index.js',
     output: {
         libraryTarget: 'var',
-        library: 'Client'
+        library: 'Client',
+        filename: 'Bundle.js',
     },
     devServer: {
-        port: 8090
+        port: 8090,
+        contentBase: path.join(__dirname, './dist'),
+        watchContentBase: true,
     },
     mode: 'development',
     devtool: 'source-map',
@@ -29,7 +32,7 @@ module.exports = {
                 use: [ 'style-loader', 'css-loader', 'sass-loader']
             },
             {
-                test: /\.(jpe?g|png|gif|svg)$/i, 
+                test: /\.(jpe?g|png|gif|svg)$/i,
                 loader: "file-loader?name=/public/icons/[name].[ext]"
             }
         ]
