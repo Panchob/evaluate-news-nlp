@@ -29,27 +29,25 @@ app.get('/', function (req, res) {
     res.sendFile(path.resolve('src/client/views/index.html'));
 });
 
-
-app.get('/test', function (req, res) {
-    console.log("TEST ENDPOINT REACHED");
-    res.send({test:"test"});
-});
-
 app.post('/summary', summarize);
 
 function summarize(req, res)
 {
+    let summary = []
     const data = req.body
     console.log(data)
     textapi.summarize({
-        url: 'http://techcrunch.com/2015/04/06/john-oliver-just-changed-the-surveillance-reform-debate',
+        url: data.article,
         sentences_number: 3
         }, function(error, response) {
-        if (error === null) {
-            res.sentences.forEach(function(s) {
-            console.log(s);
-            });
-        }
+            if (error === null) {
+                response.sentences.forEach(function(s) {
+                    summary.push(s);
+
+                });
+                console.log(summary)
+                res.send({'summary':summary})
+            }
         });
 }
 
