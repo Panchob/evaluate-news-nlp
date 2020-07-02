@@ -11,11 +11,10 @@ function handleSubmit(event) {
 
     if(validURL(url))
     {
-        console.log(process.env.HOST)
         // Fetch all needed data
-        let post_title = title(`/extract`, {article:url});
-        let post_summary = summary(`/summary`, {article:url});
-        let post_sentiment = sentiment(`/sentiment`, {article:url})
+        let post_title = title('/extract', {article:url});
+        let post_summary = summary('/summary', {article:url});
+        let post_sentiment = sentiment('/sentiment', {article:url})
         
         // Make sure that everything is loaded
         Promise.all([post_title, post_summary, post_sentiment])
