@@ -3,43 +3,48 @@ import { validURL } from './validateURL'
 function handleSubmit(event) {
     event.preventDefault()
 
-    // check what text was put into the form field
-    let url = document.getElementById('name').value
+    // Retrieve the input
+    let url = document.getElementById('url').value
+    // Get the section where text will appear
     const html_results =  document.getElementById('results')
 
 
     if(validURL(url))
     {
-        let post_title = title('http://localhost:8000/extract', {article:url});
-        let post_summary = summarize('http://localhost:8000/summary', {article:url});
-        let post_sentiment = sentiment('http://localhost:8000/sentiment', {article:url})
+        console.log(process.env.HOST)
+        // Fetch all needed data
+        let post_title = title(`/extract`, {article:url});
+        let post_summary = summary(`/summary`, {article:url});
+        let post_sentiment = sentiment(`/sentiment`, {article:url})
+        
+        // Make sure that everything is loaded
+        Promise.all([post_title, post_summary, post_sentiment])
+        .then(function(responses) {
+            // Store all data into an array
+            return Promise.all(responses.map(function(response) {
+                return response;
+            }));
+        })
+        .then(function(data) {
+            // data[{title}, {summary}, {polarity, subjectivity}]
+            let html_result = `
+                                <div id="summary">
+                                    <h3 id="articleTitle">${data[0].title}</h3>
+                                    <p>${data[1].summary}</p>
+                                </div>
+                                <div id="sentiment">
+                                    <p id="polarity"><strong>Polarity: </strong>${data[2].polarity}</p>
+                                    <p id="subjectivity"><strong>Subjectivity: </strong>${data[2].subjectivity}</p>
+                                </div>`;
+            
+            // Remove previous data, if any
+            html_results.innerHTML = '';
+            // Add the new section
+            html_results.insertAdjacentHTML("afterbegin", html_result);
 
-        Promise.all([post_title, 
-                     post_summary, 
-                     post_sentiment
-            ]).then(function(responses) {
-                return Promise.all(responses.map(function(response){
-                    return response;
-                    }));
-            }).then(function(data){
-
-                let html_result = `
-                                   <div id="summary">
-                                     <h3 id="articleTitle">${data[0].title}</h3>
-                                     <p>${data[1].summary}</p>
-                                  </div>
-                                  <div id="sentiment">
-                                     <p id="polarity"><strong>Polarity: </strong>${data[2].polarity}</p>
-                                     <p id="subjectivity"><strong>Subjectivity: </strong>${data[2].subjectivity}</p>
-                                   </div>`;
-
-                html_results.innerHTML = '';
-                html_results.insertAdjacentHTML("afterbegin", html_result);
-
-            }).catch(function(error){
-                console.log(error)
-            });
-
+        }).catch(function(error){
+            console.log(error)
+        });
     }
     else
     {
@@ -48,7 +53,7 @@ function handleSubmit(event) {
 
 }
 
-const summarize = async(url='', data = {})=>{
+const summary = async(url='', data = {})=>{
     const res = await fetch(url, {
         method: 'POST',
         credentials: 'same-origin',
