@@ -73,6 +73,7 @@ app.post('/sentiment', function sentiment(req, res){
 });
 
 // designates what port the app will listen to for incoming requests
-app.listen(8000, function () {
-    console.log('listening on port 8000!');
-})
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
+});
