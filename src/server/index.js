@@ -4,9 +4,7 @@ var aylien = require("aylien_textapi");
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const express = require('express');
-
 const dotenv = require('dotenv');
-
 dotenv.config();
 
 const app = express();
@@ -30,7 +28,7 @@ app.get('/', function (req, res) {
 });
 
 app.post('/summary', function summarize(req, res){
-    article = req.body.article
+    const article = req.body.article
     summary = []
 
     textapi.summarize({
@@ -43,11 +41,14 @@ app.post('/summary', function summarize(req, res){
                 });
                 res.send({'summary':summary});
             }
+            else {
+                res.send(error)
+            }
         });
 });
 
 app.post('/extract', function extract(req, res){
-    article = req.body.article
+    const article = req.body.article
 
     textapi.extract({
         url: article,
@@ -55,25 +56,53 @@ app.post('/extract', function extract(req, res){
         if (error === null) {
             res.send({'title':response.title})
         }
+        else {
+            res.send(error)
+        }
     });
 });
     
 
 app.post('/sentiment', function sentiment(req, res){
-    article = req.body.article
+    const article = req.body.article
 
     textapi.sentiment({
         url: article,
         mode: 'document'
       }, function(error, response) {
         if (error === null) {
-            res.send(response)
+            res.send({'polarity':response.polarity})
+        }
+        else {
+            res.send(error)
         }
     });
+});
+
+app.post('/concepts', function concepts(req, res){
+    const article = req.body.article
+    mainConcepts = []
+
+    textapi.concepts({
+        url: article
+      }, function(error, response) {
+        if (error === null) {
+          Object.keys(response.concepts).forEach(function(concept) {
+            var surfaceForms = response.concepts[concept].surfaceForms.map(function(sf) {
+              return sf['string'];
+            });
+            mainConcepts.push(surfaceForms.join(","));
+          });
+          res.send({'concepts':mainConcepts})
+        }else {
+            res.send(error)
+        }
+        
+      });
 });
 
 // designates what port the app will listen to for incoming requests
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-    console.log(`Our app is running on port ${ PORT }`);
+    console.log(`App is running on port ${ PORT }`);
 });
