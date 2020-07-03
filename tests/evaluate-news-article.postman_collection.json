@@ -1,0 +1,53 @@
+{
+	"info": {
+		"_postman_id": "05f0e3cc-8baf-494f-b28c-51bc9ac91bad",
+		"name": "evaluate-news-article",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "extract",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c3eb9ca6-5641-497e-9348-8b32edd05842",
+						"exec": [
+							"pm.test(\"Title is correct\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.title).to.eql(\"Globe-galloping cowboy Filipe Masetti Leite to ride into Calgary after 8-year journey\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"article\":\"https://globalnews.ca/news/7131508/calgary-stampede-parade-2020-filipe-masetti-leite/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/extract",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"extract"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
