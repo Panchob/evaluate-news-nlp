@@ -1,6 +1,6 @@
 # Evaluate news with natural language processing
 
-This simple page take an URL as is only input. The URL must be a link to an article or a blog. After submitting, the following information will be extracted:
+This simple page takes an URL as is only input. The URL must be a link to an article or a blog. After submitting, the following information will be extracted:
 
 1. The title of the article
 2. A summary of the article or blog
