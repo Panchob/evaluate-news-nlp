@@ -1,4 +1,5 @@
 import { validURL } from './validateURL'
+import regeneratorRuntime from "regenerator-runtime";
 
 function handleSubmit(event) {
     event.preventDefault()
@@ -100,7 +101,6 @@ const title = async(url='', data = {})=>{
         return title;
     }catch(error) {
         console.log("error", error);
-        alert("error");
     }
 };
 
@@ -119,7 +119,6 @@ const polarity = async(url='', data = {})=>{
         return sentiment;
     }catch(error){
         console.log("error", error);
-        alert("error");
     }
 };
 
@@ -138,9 +137,8 @@ const mainConcepts = async(url='', data = {})=>{
         return concept;
     }catch(error){
         console.log("error", error);
-        alert("error");
     }
 };
 
 
-export { handleSubmit }
+export { handleSubmit, title, mainConcepts, polarity, summary }

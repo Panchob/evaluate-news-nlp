@@ -15,7 +15,7 @@
 						"exec": [
 							"pm.test(\"Title is correct\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.title).to.eql(\"Globe-galloping cowboy Filipe Masetti Leite to ride into Calgary after 8-year journey\");\r",
+							"    pm.expect(jsonData.title).to.eql(\"Globe-galloping cowboy Filipe Masetti Leite rides into Calgary after 8-year journey\");\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -43,6 +43,158 @@
 					"port": "8000",
 					"path": [
 						"extract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7bfed9ae-be33-46fe-9947-2f5066bc4447",
+						"exec": [
+							"pm.test(\"Summary is correct\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.summary).to.eql([\r",
+							"        \"Masetti Leite was originally going to lead the 2020 Calgary Stampede Parade before the COVID-19 pandemic forced the cancellation of the Greatest Outdoor Show on Earth.\",\r",
+							"        \"Masetti Leite completes his eight-year journey across the  Masetti Leite completes his eight-year journey across the Americas\\n\\t\\t\\t\\n\\t\\t\\t\\t\\nAs he rode into Calgary on Friday along 12 Mile Coulee Road, the cowboy was met by Stampede officials including President Dana Peers, before travelling through the city with an escort of police mounted  Masetti Leite (left) and Calgary Stampede President Dana Peers (right) celebrate the cowboy’s eight-year journey.\",\r",
+							"        \"Adam Toy / Global News\\t\\t\\t\\t\\n\\t\\t\\t\\t\\t\\n\\t\\t\\n\\n\\n\\nMasetti Leite, who moved to Canada from Brazil when he was a kid, began his original journey in July 2012 when he saddled up and set off from the Calgary Stampede’s centennial celebration.\"\r",
+							"    ]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"article\":\"https://globalnews.ca/news/7131508/calgary-stampede-parade-2020-filipe-masetti-leite/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/summary",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"summary"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "concepts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "880f08eb-a527-465c-ab64-d6b44e5fa474",
+						"exec": [
+							"pm.test(\"Concepts are correct\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.concepts).to.eql([\r",
+							"        \"Alta\",\r",
+							"        \"Brazil\",\r",
+							"        \"riding\",\r",
+							"        \"Grande Prairie\",\r",
+							"        \"Canada\",\r",
+							"        \"division\",\r",
+							"        \"cowboy\",\r",
+							"        \"cross\",\r",
+							"        \"Filipe\",\r",
+							"        \"Corus Entertainment\",\r",
+							"        \"Fairbanks\",\r",
+							"        \"Global News\",\r",
+							"        \"Earth\",\r",
+							"        \"President\",\r",
+							"        \"soul\",\r",
+							"        \"Calgary\",\r",
+							"        \"pandemic\",\r",
+							"        \"Calgary Stampede Parade,Calgary Stampede,Stampede Park\"\r",
+							"    ]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"article\":\"https://globalnews.ca/news/7131508/calgary-stampede-parade-2020-filipe-masetti-leite/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/concepts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"concepts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sentiment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bc322c10-eaa1-41db-859b-706ee2e3074b",
+						"exec": [
+							"pm.test(\"Concepts are correct\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.polarity).to.eql(\"neutral\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"article\":\"https://globalnews.ca/news/7131508/calgary-stampede-parade-2020-filipe-masetti-leite/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/sentiment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"sentiment"
 					]
 				}
 			},
